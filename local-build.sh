@@ -32,6 +32,7 @@ docker run -ti --rm \
   -v "${PWD}/src/cod":/home/source \
   -v "${PWD}/debs":/home/debs \
   focal-mainline-builder:latest \
+  --flavour=generic \
   --exclude=cloud-tools,udebs \
   --buildmeta=yes
 
