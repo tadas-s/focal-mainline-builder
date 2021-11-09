@@ -11,7 +11,7 @@ echo "=========================================================="
 echo "Building docker image"
 echo "=========================================================="
 
-docker build -t focal-mainline-builder .
+docker build --pull --tag focal-mainline-builder .
 
 if [ ! -d ./src/cod ]; then
   echo "=========================================================="
