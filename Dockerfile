@@ -29,6 +29,8 @@ RUN set -x \
     libunwind8-dev liblzma-dev libaudit-dev uuid-dev libnuma-dev lz4 xmlto equivs \
     cmake pkg-config zstd dwarves
 
+RUN git config --global --add safe.directory /home/source
+
 COPY build.sh /build.sh
 
 ENTRYPOINT ["/build.sh"]
