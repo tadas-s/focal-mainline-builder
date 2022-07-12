@@ -102,6 +102,16 @@ else
   chmod 700 /root/.gnupg
 fi
 
+if [ ! -d /home/source/.git ]; then
+  echo -e "********\n\nGetting source\n\n********"
+
+  git clone \
+    git://git.launchpad.net/~ubuntu-kernel-test/ubuntu/+source/linux/+git/mainline-crack \
+    /home/source
+else
+  echo -e "********\n\nGot kernel sources already\n\n********"
+fi
+
 cd "$ksrc" || __die 1 "\$ksrc ${ksrc@Q} not found"
 
 # tell git to trust /home/source
@@ -114,7 +124,7 @@ git reset --hard HEAD
 if [ "$update" == "yes" ]
 then
   echo -e "********\n\nUpdating git source tree\n\n********"
-  git fetch --tags origin 
+  git fetch --tags origin
 fi
 
 # checkout the kver

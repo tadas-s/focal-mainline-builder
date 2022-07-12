@@ -13,26 +13,18 @@ echo "=========================================================="
 
 docker build --pull --tag focal-mainline-builder .
 
-if [ ! -d ./src/cod ]; then
-  echo "=========================================================="
-  echo "Getting kernel tree"
-  echo "=========================================================="
+docker container rm -f focal_mainline_builder
 
-  git clone \
-    git://git.launchpad.net/~ubuntu-kernel-test/ubuntu/+source/linux/+git/mainline-crack \
-    ./src/cod
-else
-  echo "=========================================================="
-  echo "Got kernel sources already"
-  echo "=========================================================="
-fi
-
-docker run -ti --rm \
+docker run -ti \
+  --name focal_mainline_builder \
   -e kver="$1" \
-  -v "${PWD}/src/cod":/home/source \
-  -v "${PWD}/debs":/home/debs \
+  -v focal_mainline_builder_source:/home/source \
   focal-mainline-builder:latest \
   --flavour=generic \
   --exclude=cloud-tools,udebs \
   --buildmeta=yes
 
+rm -rf ./debs/v*
+docker cp focal_mainline_builder:/home/debs/${1} ./debs/
+
+docker container rm focal_mainline_builder

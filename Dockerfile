@@ -30,6 +30,7 @@ RUN set -x \
     cmake pkg-config zstd dwarves
 
 RUN git config --global --add safe.directory /home/source
+RUN mkdir -p /home/debs
 
 COPY build.sh /build.sh
 
